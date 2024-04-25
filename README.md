@@ -1,4 +1,4 @@
-The model contains an LSTM model for the use of Image Classification between classes [Benign, Malignant, Normal]. The predictions resulted in about a 97% accuracy on test data with a basic 2 layer system.
+The model contains an CNN model for the use of Image Classification between classes [Benign, Malignant, Normal]. The predictions resulted in about a 98% accuracy on test data with a CNN network.
 
 Dataset used was The Iraq-Oncology Teaching Hospital/National Center for Cancer Diseases (IQ-OTH/NCCD) lung cancer dataset
 
