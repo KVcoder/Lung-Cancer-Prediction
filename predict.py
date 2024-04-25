@@ -8,7 +8,7 @@ import numpy as np
 import pydicom
 from PIL import Image
 
-model = tf.keras.models.load_model('best_model.keras')
+model = tf.keras.models.load_model('best_model_CNN.keras')
 def load_images_from_folder(folder):
     images = []
     for filename in os.listdir(folder):
@@ -26,9 +26,8 @@ def load_images_from_folder(folder):
         img = img.convert('L') if img.mode != 'L' else img 
         img = np.array(img)    
         img = transform.resize(img, (100, 100), anti_aliasing=True)   
-        hog_features = hog(img, orientations=9, pixels_per_cell=(8,8), cells_per_block=(2,2), transform_sqrt=True, block_norm='L2-Hys')             
-        images.append(hog_features.flatten().reshape(1, -1))
-    return np.vstack(images)
+        images.append(img)
+    return np.array(images)
 
 
 root = tk.Tk()
@@ -36,8 +35,7 @@ root.withdraw()
 file_path = filedialog.askdirectory()
 images = load_images_from_folder(file_path) ### PASS FOLDER WITH DATA
 
-X = np.array(images)
-X = X.reshape(X.shape[0], 1, -1)
+X = images.reshape(-1, 100, 100, 1)
 
 predictions = model.predict(X)
 predicted_classes = np.array(tf.argmax(predictions, axis=1), dtype='U10')
